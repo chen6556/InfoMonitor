@@ -50,4 +50,9 @@ qt_add_executable(InfoMonitor
 target_link_libraries(InfoMonitor PRIVATE Qt6::Widgets Qt6::Gui Qt6::Core Qt6::Network)
 target_compile_definitions(InfoMonitor PUBLIC POINTERHOLDER_TRANSITION=0)
 
+set_target_properties(InfoMonitor PROPERTIES
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
+)
+
 qt_finalize_executable(InfoMonitor)

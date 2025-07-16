@@ -8,14 +8,6 @@
 
 int main(int argc, char *argv[])
 {
-    QSharedMemory memory("NotificationClient");
-    if (memory.attach())
-    {
-        QMessageBox::warning(nullptr, QApplication::tr("Warning"), QApplication::tr("Application is already running."));
-        return 0;
-    }
-    memory.create(1);
-
     QApplication a(argc, argv);
     a.setStyle("Fusion");
 
@@ -31,6 +23,14 @@ int main(int argc, char *argv[])
     default:
         break;
     }
+
+    QSharedMemory memory("NotificationClient");
+    if (memory.attach())
+    {
+        QMessageBox::warning(nullptr, QApplication::tr("Warning"), QApplication::tr("Application is already running."));
+        return 0;
+    }
+    memory.create(1);
 
     MainWindow w;
     w.show();
