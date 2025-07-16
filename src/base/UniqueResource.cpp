@@ -14,5 +14,6 @@ UniqueResource::UniqueResource()
     Timer1.start(1'000);
 
     Timer600.start(600'000);
-    Timer1800.start(3'600'000);
+
+    Timer3600.start(3'600'000);
 }
