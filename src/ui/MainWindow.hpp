@@ -1,4 +1,5 @@
 #pragma once
+#include <QGuiApplication>
 #include <QMainWindow>
 #include <QCloseEvent>
 #include <QMenu>

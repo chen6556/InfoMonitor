@@ -15,7 +15,7 @@ UseTab: Never
 BreakBeforeBraces: Allman
 
 # 段落间两行空格
-MaxEmptyLinesToKeep: 2
+MaxEmptyLinesToKeep: 4
 
 # 禁止将函数缩进成一行
 AllowShortFunctionsOnASingleLine: None
