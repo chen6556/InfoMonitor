@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>420</height>
+   </size>
+  </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">InfoMonitor 0.0.1</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../res/InfoMonitor.qrc">
+    <normaloff>:/images/InfoMonitor.svg</normaloff>:/images/InfoMonitor.svg</iconset>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>256</width>
+    <height>256</height>
+   </size>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">Widget#centralWidget{background:rgb(37, 37, 38);}</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>4</number>
+        </property>
+        <property name="leftMargin">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>4</number>
+        </property>
+        <property name="bottomMargin">
+         <number>4</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="TimeAndWeather" name="TimeAndWeatherElement" native="true"/>
+          </item>
+          <item>
+           <widget class="Element" name="widget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>384</width>
+              <height>277</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="Element" name="widget_2" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>384</width>
+              <height>277</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Element" name="widget_3" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>384</width>
+              <height>277</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>4</number>
+        </property>
+        <property name="leftMargin">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>4</number>
+        </property>
+        <property name="bottomMargin">
+         <number>4</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TimeAndWeather</class>
+   <extends>QWidget</extends>
+   <header>element/TimeAndWeather.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Element</class>
+   <extends>QWidget</extends>
+   <header>Element.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../res/InfoMonitor.qrc"/>
+ </resources>
+ <connections/>
+ <slots>
+  <slot>open_file()</slot>
+  <slot>save_file()</slot>
+  <slot>saveas_file()</slot>
+  <slot>auto_save()</slot>
+  <slot>rotate()</slot>
+  <slot>flip_x()</slot>
+  <slot>flip_y()</slot>
+  <slot>mirror()</slot>
+  <slot>connect_polylines()</slot>
+  <slot>combinate()</slot>
+  <slot>close_polyline()</slot>
+  <slot>to_main_page()</slot>
+  <slot>to_array_page()</slot>
+  <slot>line_array()</slot>
+  <slot>ring_array()</slot>
+  <slot>close_file()</slot>
+  <slot>show_data_panel()</slot>
+  <slot>offset()</slot>
+  <slot>polygon_union()</slot>
+  <slot>polygon_intersection()</slot>
+  <slot>polygon_difference()</slot>
+  <slot>scale()</slot>
+  <slot>append_file()</slot>
+  <slot>refresh_tool_label(Canvas::Tool)</slot>
+  <slot>fillet()</slot>
+  <slot>refresh_tool_label(Canvas::Operation)</slot>
+  <slot>set_catch(QAction*)</slot>
+ </slots>
+</ui>
