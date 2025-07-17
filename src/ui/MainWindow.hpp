@@ -3,6 +3,7 @@
 #include <QCloseEvent>
 #include <QMenu>
 #include <QSystemTrayIcon>
+#include <QTranslator>
 
 
 QT_BEGIN_NAMESPACE
@@ -18,9 +19,10 @@ private:
     QSystemTrayIcon m_TrayIcon;
     QMenu m_TrayMenu;
     QAction m_QuitAction;
+    QTranslator *m_Translator;
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QTranslator *translator, QWidget *parent = nullptr);
     ~MainWindow();
 
 protected:
@@ -32,4 +34,8 @@ private:
     void SystemTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
     void ChangeTheme(const QString &theme);
+
+    void Retranslate(const QString &lang);
+
+    void ReadSetting();
 };

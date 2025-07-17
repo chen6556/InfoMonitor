@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en">
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Quit</source>
-        <translation>退出</translation>
+        <source>Tab 1</source>
+        <translation>页面 1</translation>
+    </message>
+    <message>
+        <source>Tab 2</source>
+        <translation>页面 2</translation>
+    </message>
+    <message>
+        <source>Setting</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>语言</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>主题</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>通用</translation>
     </message>
 </context>
 <context>

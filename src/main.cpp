@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     }
     memory.create(1);
 
-    MainWindow w;
+    MainWindow w(&translator);
     w.show();
 
     return a.exec();

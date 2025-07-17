@@ -4,9 +4,10 @@
 #include "base/UniqueResource.hpp"
 
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QTranslator *translator, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
-    m_TrayIcon(this), m_TrayMenu(this), m_QuitAction(this)
+    m_TrayIcon(this), m_TrayMenu(this), m_QuitAction(this),
+    m_Translator(translator)
 {
     ui->setupUi(this);
     Init();
@@ -25,20 +26,23 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::Init()
 {
-    QDir::setCurrent(QGuiApplication::applicationDirPath());
+    QDir::setCurrent(QApplication::applicationDirPath());
 
     m_TrayIcon.setIcon(QIcon(":/images/InfoMonitor.svg"));
     m_TrayIcon.setToolTip("InfoMonitor");
 
     m_QuitAction.setText(tr("Quit"));
-    m_QuitAction.connect(&m_QuitAction, &QAction::triggered, []() { QGuiApplication::quit(); });
+    connect(&m_QuitAction, &QAction::triggered, []() { QApplication::quit(); });
 
     m_TrayMenu.addAction(&m_QuitAction);
     m_TrayIcon.setContextMenu(&m_TrayMenu);
     m_TrayIcon.show();
-    m_TrayIcon.connect(&m_TrayIcon, &QSystemTrayIcon::activated, this, &MainWindow::SystemTrayIconActivated);
+    connect(&m_TrayIcon, &QSystemTrayIcon::activated, this, &MainWindow::SystemTrayIconActivated);
 
-    ChangeTheme("default-light");
+    connect(ui->cb_Language, &QComboBox::currentTextChanged, [this](const QString &lang) { Retranslate(lang); });
+    connect(ui->cb_Theme, &QComboBox::currentTextChanged, [this](const QString &theme) { ChangeTheme(theme); });
+
+    ReadSetting();
 }
 
 void MainWindow::SystemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
@@ -57,8 +61,43 @@ void MainWindow::ChangeTheme(const QString &theme)
 {
     if (QFile file(":/theme/theme/" + theme + ".qss"); file.open(QIODevice::OpenModeFlag::ReadOnly))
     {
+        GlobalConfig::Config().SetValue("Theme", theme);
         setStyleSheet(file.readAll());
         file.close();
         update();
     }
+    else
+    {
+        GlobalConfig::Config().SetValue("Theme", "default-light");
+        QFile file2(":/theme/theme/default-light.qss");
+        file2.open(QIODevice::OpenModeFlag::ReadOnly);
+        setStyleSheet(file2.readAll());
+        file2.close();
+        update();
+    }
+}
+
+void MainWindow::Retranslate(const QString &lang)
+{
+    if (m_Translator->load(":/translation/translations/" + lang + ".qm"))
+    {
+        GlobalConfig::Config().SetValue("TimeAndWeather/Lang", lang);
+        GlobalConfig::Config().SetValue("Language", lang);
+        QApplication::installTranslator(m_Translator);
+    }
+    else
+    {
+        GlobalConfig::Config().SetValue("TimeAndWeather/Lang", "en");
+        GlobalConfig::Config().SetValue("Language", "en");
+        QApplication::removeTranslator(m_Translator);
+    }
+    ui->retranslateUi(this);
+}
+
+void MainWindow::ReadSetting()
+{
+    ui->cb_Language->setCurrentText(GlobalConfig::Config().Value("Language").toString());
+    Retranslate(GlobalConfig::Config().Value("Language").toString());
+    ui->cb_Theme->setCurrentText(GlobalConfig::Config().Value("Theme").toString());
+    ChangeTheme(GlobalConfig::Config().Value("Theme").toString());
 }
