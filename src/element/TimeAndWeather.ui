@@ -43,7 +43,7 @@
        <height>80</height>
       </size>
      </property>
-     <property name="WhiteBackground" stdset="0">
+     <property name="Background0" stdset="0">
       <bool>true</bool>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">

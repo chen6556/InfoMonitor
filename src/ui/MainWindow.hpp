@@ -18,6 +18,7 @@ private:
     Ui::MainWindow *ui;
     QSystemTrayIcon m_TrayIcon;
     QMenu m_TrayMenu;
+    QAction m_ShowAction;
     QAction m_QuitAction;
     QTranslator *m_Translator;
 

@@ -6,8 +6,8 @@
 
 MainWindow::MainWindow(QTranslator *translator, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
-    m_TrayIcon(this), m_TrayMenu(this), m_QuitAction(this),
-    m_Translator(translator)
+    m_TrayIcon(this), m_TrayMenu(this), m_ShowAction(this),
+    m_QuitAction(this), m_Translator(translator)
 {
     ui->setupUi(this);
     Init();
@@ -31,9 +31,10 @@ void MainWindow::Init()
     m_TrayIcon.setIcon(QIcon(":/images/InfoMonitor.svg"));
     m_TrayIcon.setToolTip("InfoMonitor");
 
-    m_QuitAction.setText(tr("Quit"));
+    connect(&m_ShowAction, &QAction::triggered, [this]() { isVisible() ? hide() : showNormal(); });
     connect(&m_QuitAction, &QAction::triggered, []() { QApplication::quit(); });
 
+    m_TrayMenu.addAction(&m_ShowAction);
     m_TrayMenu.addAction(&m_QuitAction);
     m_TrayIcon.setContextMenu(&m_TrayMenu);
     m_TrayIcon.show();
@@ -91,6 +92,8 @@ void MainWindow::Retranslate(const QString &lang)
         GlobalConfig::Config().SetValue("Language", "en");
         QApplication::removeTranslator(m_Translator);
     }
+    m_ShowAction.setText(tr("Show"));
+    m_QuitAction.setText(tr("Quit"));
     ui->retranslateUi(this);
 }
 

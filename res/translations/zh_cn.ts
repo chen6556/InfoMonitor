@@ -27,6 +27,14 @@
         <source>General</source>
         <translation>通用</translation>
     </message>
+    <message>
+        <source>Show</source>
+        <translation>显示</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>退出</translation>
+    </message>
 </context>
 <context>
     <name>QApplication</name>

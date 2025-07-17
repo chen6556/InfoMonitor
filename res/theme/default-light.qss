@@ -4,16 +4,22 @@ QObject[Transparent = true]
     background: transparent;
 }
 
-QObject[WhiteBackground = true]
+QObject[Background0 = true]
 {
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(250, 250, 251);
+}
+
+QMainWindow
+{
+    background-color: rgb(240, 240, 241);
 }
 
 Element
 {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(240, 240, 241);
     border: 1px solid black;
     border-radius: 10px;
+    font-size: 16px;
 }
 
 Element QWidget
@@ -25,14 +31,43 @@ Element QWidget
 
 QListWidget, QListView
 {
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(250, 250, 251);
     border: 1px solid black;
-    border-radius: 15px;
+    border-radius: 10px;
     font-size: 16px;
 }
 
 QLabel
 {
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(250, 250, 251);
+    font-size: 16px;
 }
 
+QTabWidget#mainTabWidget
+{
+    background-color: rgb(240, 240, 241);
+    font-size: 16px;
+}
+
+QGroupBox
+{
+    font-size: 16px;
+    margin-top: 14px;
+}
+
+QGroupBox::title
+{
+    subcontrol-origin: margin;
+    left: 8px;
+}
+
+QComboBox
+{
+    padding-left: 12px;
+	font-size: 16px;
+}
+
+QComboBox QAbstractItemView
+{
+    border: none;
+}

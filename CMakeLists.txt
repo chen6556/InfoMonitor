@@ -34,7 +34,7 @@ include_directories(src)
 
 set(TS_FILES res/translations/zh_cn.ts)
 set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${PROJECT_SOURCE_DIR}/res/translations)
-qt_create_translation(QM_FILES src/main.cpp ${UI_FILES} ${_ELEMENT_SOURCES} ${_BASE_SOURCES} ${TS_FILES}
+qt_create_translation(QM_FILES src/main.cpp ${UI_FILES} ${_UI_SOURCES} ${_ELEMENT_SOURCES} ${_BASE_SOURCES} ${TS_FILES}
     OPTIONS -no-obsolete -locations none -no-ui-lines)
 
 qt_add_executable(InfoMonitor

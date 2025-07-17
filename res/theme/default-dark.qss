@@ -1,0 +1,108 @@
+QObject[Transparent = true]
+{
+    border: none;
+    background: transparent;
+}
+
+QObject[Background0 = true]
+{
+    background-color: rgb(60, 60, 61);
+}
+
+QMainWindow
+{
+    color: rgb(200, 198, 196);
+    background-color: rgb(40, 40, 41);
+}
+
+Element
+{
+    color: rgb(200, 198, 196);
+    background-color: rgb(50, 50, 51);
+    border: 1px solid rgb(80, 80, 81);
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+Element QWidget
+{
+    color: rgb(200, 198, 196);
+    background-color: rgb(60, 60, 61);
+    border: 1px solid rgb(80, 80, 81);
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+QListWidget, QListView
+{
+    background-color: rgb(60, 60, 61);
+    border: 1px solid rgb(210, 208, 206);
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+QLabel
+{
+    background-color: rgb(60, 60, 61);
+    color: rgb(200, 198, 196);
+    font-size: 16px;
+}
+
+QTabWidget#mainTabWidget
+{
+    background-color: rgb(30, 30, 31);
+    color: rgb(200, 198, 196);
+    font-size: 16px;
+}
+
+QTabWidget#mainTabWidget QTabBar::tab:!selected
+{
+    background-color: rgb(30, 30, 31);
+    color: rgb(200, 198, 196);
+}
+
+QTabWidget#mainTabWidget QTabBar::tab:selected
+{
+    background-color: rgb(60, 60, 61);
+    color: rgb(200, 198, 196);
+}
+
+QGroupBox
+{
+    font-size: 16px;
+    color: rgb(200, 198, 196);
+    background-color: rgb(60, 60, 61);
+    border: 1px solid rgb(80, 80, 81);
+    margin-top: 14px;
+}
+
+QGroupBox::title
+{
+    subcontrol-origin: margin;
+    left: 8px;
+}
+
+QComboBox
+{
+    color: rgb(200, 198, 196);
+	background-color: rgb(70, 70, 71);
+	border: 1px solid rgb(80, 80, 81);
+    padding-left: 12px;
+	font-size: 16px;
+}
+
+QComboBox QAbstractItemView
+{
+    border: none;
+}
+
+QMenu
+{
+    color: rgb(200, 198, 196);
+    background: rgb(40, 40, 41);
+}
+
+QMenu::item:selected
+{
+    background: rgb(80, 80, 81);
+}
