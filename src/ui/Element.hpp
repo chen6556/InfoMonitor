@@ -20,6 +20,9 @@ public:
 
     ~Element();
 
+signals:
+    void Message(const QString &title, const QString &message);
+
 private:
     void Init();
 };

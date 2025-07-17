@@ -26,21 +26,6 @@ double TimeAndWeather::K2C(const double value)
     return value - 273.15;
 }
 
-void TimeAndWeather::Init()
-{
-    connect(&UniqueResource::Resource().Timer1, &QTimer::timeout, this, &TimeAndWeather::UpdateTime);
-    connect(&UniqueResource::Resource().Timer600, &QTimer::timeout, this, &TimeAndWeather::UpdateWeather);
-    connect(&UniqueResource::Resource().Timer3600, &QTimer::timeout, this, &TimeAndWeather::UpdateForecast);
-
-    UpdateWeather();
-    UpdateForecast();
-}
-
-void TimeAndWeather::UpdateTime()
-{
-    ui->lb_Time->setText(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss"));
-}
-
 void TimeAndWeather::UpdateWeather()
 {
     QUrlQuery query;
@@ -54,6 +39,34 @@ void TimeAndWeather::UpdateWeather()
     request.setUrl(url);
     QNetworkReply *reply = UniqueResource::Resource().NetworkManager.get(request);
     connect(reply, &QNetworkReply::finished, [this, reply]() { UpdateWeatherInfo(reply); });
+}
+
+void TimeAndWeather::UpdateForecast()
+{
+    QUrlQuery query;
+    query.addQueryItem("lat", GlobalConfig::Config().Value("TimeAndWeather/Latitude").toString());
+    query.addQueryItem("lon", GlobalConfig::Config().Value("TimeAndWeather/Longituden").toString());
+    query.addQueryItem("lang", GlobalConfig::Config().Value("TimeAndWeather/Lang").toString());
+    query.addQueryItem("cnt", "5");
+    query.addQueryItem("appid", GlobalConfig::Config().Value("TimeAndWeather/WeatherAPIKey").toString());
+    QUrl url(GlobalConfig::Config().Value("TimeAndWeather/ForecastAPI").toString());
+    url.setQuery(query);
+    QNetworkRequest request;
+    request.setUrl(url);
+    QNetworkReply *reply = UniqueResource::Resource().NetworkManager.get(request);
+    connect(reply, &QNetworkReply::finished, [this, reply]() { UpdateForecastInfo(reply); });
+}
+
+void TimeAndWeather::Init()
+{
+    connect(&UniqueResource::Resource().Timer1, &QTimer::timeout, this, &TimeAndWeather::UpdateTime);
+    connect(&UniqueResource::Resource().Timer600, &QTimer::timeout, this, &TimeAndWeather::UpdateWeather);
+    connect(&UniqueResource::Resource().Timer3600, &QTimer::timeout, this, &TimeAndWeather::UpdateForecast);
+}
+
+void TimeAndWeather::UpdateTime()
+{
+    ui->lb_Time->setText(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss"));
 }
 
 void TimeAndWeather::UpdateWeatherInfo(QNetworkReply *reply)
@@ -100,22 +113,6 @@ void TimeAndWeather::UpdateWeatherInfo(QNetworkReply *reply)
         ui->lb_Clouds->clear();
     }
     reply->deleteLater();
-}
-
-void TimeAndWeather::UpdateForecast()
-{
-    QUrlQuery query;
-    query.addQueryItem("lat", GlobalConfig::Config().Value("TimeAndWeather/Latitude").toString());
-    query.addQueryItem("lon", GlobalConfig::Config().Value("TimeAndWeather/Longituden").toString());
-    query.addQueryItem("lang", GlobalConfig::Config().Value("TimeAndWeather/Lang").toString());
-    query.addQueryItem("cnt", "5");
-    query.addQueryItem("appid", GlobalConfig::Config().Value("TimeAndWeather/WeatherAPIKey").toString());
-    QUrl url(GlobalConfig::Config().Value("TimeAndWeather/ForecastAPI").toString());
-    url.setQuery(query);
-    QNetworkRequest request;
-    request.setUrl(url);
-    QNetworkReply *reply = UniqueResource::Resource().NetworkManager.get(request);
-    connect(reply, &QNetworkReply::finished, [this, reply]() { UpdateForecastInfo(reply); });
 }
 
 void TimeAndWeather::UpdateForecastInfo(QNetworkReply *reply)

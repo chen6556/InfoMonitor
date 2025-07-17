@@ -39,4 +39,6 @@ private:
     void Retranslate(const QString &lang);
 
     void ReadSetting();
+
+    void ShowMessage(const QString &title, const QString &message);
 };

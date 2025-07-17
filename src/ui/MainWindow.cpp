@@ -95,6 +95,9 @@ void MainWindow::Retranslate(const QString &lang)
     m_ShowAction.setText(tr("Show"));
     m_QuitAction.setText(tr("Quit"));
     ui->retranslateUi(this);
+
+    ui->TimeAndWeatherElement->UpdateForecast();
+    ui->TimeAndWeatherElement->UpdateWeather();
 }
 
 void MainWindow::ReadSetting()
@@ -103,4 +106,9 @@ void MainWindow::ReadSetting()
     Retranslate(GlobalConfig::Config().Value("Language").toString());
     ui->cb_Theme->setCurrentText(GlobalConfig::Config().Value("Theme").toString());
     ChangeTheme(GlobalConfig::Config().Value("Theme").toString());
+}
+
+void MainWindow::ShowMessage(const QString &title, const QString &message)
+{
+    m_TrayIcon.showMessage(title, message);
 }

@@ -20,16 +20,16 @@ public:
 
     static double K2C(const double value);
 
+    void UpdateWeather();
+    
+    void UpdateForecast();
+
 private:
     void Init();
 
     void UpdateTime();
 
-    void UpdateWeather();
-
     void UpdateWeatherInfo(QNetworkReply *reply);
-
-    void UpdateForecast();
 
     void UpdateForecastInfo(QNetworkReply *reply);
 };
