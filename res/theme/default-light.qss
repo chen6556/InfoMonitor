@@ -11,7 +11,7 @@ QObject[Background0 = true]
 
 QMainWindow
 {
-    background-color: rgb(240, 240, 241);
+    background-color: rgb(250, 250, 251);
 }
 
 Element
@@ -43,10 +43,32 @@ QLabel
     font-size: 16px;
 }
 
-QTabWidget#mainTabWidget
+QTabWidget#mainTabWidget, QTabWidget#mainTabWidget>QWidget
 {
-    background-color: rgb(240, 240, 241);
+    background-color: rgb(250, 250, 251);
     font-size: 16px;
+}
+
+QTabWidget#mainTabWidget QTabBar::tab:!selected
+{
+    background-color: rgb(233, 233, 233);
+}
+
+QTabWidget#mainTabWidget QTabBar::tab
+{
+    background-color: rgb(246, 246, 246);
+    border-left: 1px solid rgb(203, 203, 203);
+    border-top: 1px solid rgb(203, 203, 203);
+    border-right: 1px solid rgb(203, 203, 203);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 4px;
+    margin-bottom: 1px;
+}
+
+QTabWidget#mainTabWidget QTabBar::tab:selected
+{
+    background-color: rgb(253, 253, 254);
 }
 
 QGroupBox
