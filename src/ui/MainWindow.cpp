@@ -31,8 +31,8 @@ void MainWindow::Init()
     m_TrayIcon.setIcon(QIcon(":/images/InfoMonitor.svg"));
     m_TrayIcon.setToolTip("InfoMonitor");
 
-    connect(&m_ShowAction, &QAction::triggered, [this]() { isVisible() ? hide() : showNormal(); });
-    connect(&m_QuitAction, &QAction::triggered, []() { QApplication::quit(); });
+    connect(&m_ShowAction, &QAction::triggered, [this] { isVisible() ? hide() : showNormal(); });
+    connect(&m_QuitAction, &QAction::triggered, [] { QApplication::quit(); });
 
     m_TrayMenu.addAction(&m_ShowAction);
     m_TrayMenu.addAction(&m_QuitAction);

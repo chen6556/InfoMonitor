@@ -11,7 +11,10 @@ struct NetworkReplyAwaitable
     std::coroutine_handle<> awaiting;
 
     NetworkReplyAwaitable(QNetworkReply *r)
-        : reply(r) {};
+        : reply(r) 
+    {
+        reply->connect(reply, &QNetworkReply::finished, [&] { awaiting.resume(); });
+    }
 
     ~NetworkReplyAwaitable() = default;
 
@@ -23,7 +26,6 @@ struct NetworkReplyAwaitable
     void await_suspend(std::coroutine_handle<> h)
     {
         awaiting = h;
-        reply->connect(reply, &QNetworkReply::finished, [&]() { awaiting.resume(); });
     }
 
     // 返回结果
