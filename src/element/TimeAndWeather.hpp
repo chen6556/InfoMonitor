@@ -1,6 +1,7 @@
 #pragma once
 #include <QNetworkReply>
 #include "ui/Element.hpp"
+#include "base/Coro.hpp"
 
 
 QT_BEGIN_NAMESPACE
@@ -20,16 +21,12 @@ public:
 
     static double K2C(const double value);
 
-    void UpdateWeather();
+    NetworkReplyCoro UpdateWeather();
     
-    void UpdateForecast();
+    NetworkReplyCoro UpdateForecast();
 
 private:
     void Init();
 
     void UpdateTime();
-
-    void UpdateWeatherInfo(QNetworkReply *reply);
-
-    void UpdateForecastInfo(QNetworkReply *reply);
 };

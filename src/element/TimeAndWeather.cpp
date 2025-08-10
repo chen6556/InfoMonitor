@@ -26,7 +26,7 @@ double TimeAndWeather::K2C(const double value)
     return value - 273.15;
 }
 
-void TimeAndWeather::UpdateWeather()
+NetworkReplyCoro TimeAndWeather::UpdateWeather()
 {
     QUrlQuery query;
     query.addQueryItem("lat", GlobalConfig::Config().Value("TimeAndWeather/Latitude").toString());
@@ -37,40 +37,8 @@ void TimeAndWeather::UpdateWeather()
     url.setQuery(query);
     QNetworkRequest request;
     request.setUrl(url);
-    QNetworkReply *reply = UniqueResource::Resource().NetworkManager.get(request);
-    connect(reply, &QNetworkReply::finished, [this, reply]() { UpdateWeatherInfo(reply); });
-}
-
-void TimeAndWeather::UpdateForecast()
-{
-    QUrlQuery query;
-    query.addQueryItem("lat", GlobalConfig::Config().Value("TimeAndWeather/Latitude").toString());
-    query.addQueryItem("lon", GlobalConfig::Config().Value("TimeAndWeather/Longituden").toString());
-    query.addQueryItem("lang", GlobalConfig::Config().Value("TimeAndWeather/Lang").toString());
-    query.addQueryItem("cnt", "5");
-    query.addQueryItem("appid", GlobalConfig::Config().Value("TimeAndWeather/WeatherAPIKey").toString());
-    QUrl url(GlobalConfig::Config().Value("TimeAndWeather/ForecastAPI").toString());
-    url.setQuery(query);
-    QNetworkRequest request;
-    request.setUrl(url);
-    QNetworkReply *reply = UniqueResource::Resource().NetworkManager.get(request);
-    connect(reply, &QNetworkReply::finished, [this, reply]() { UpdateForecastInfo(reply); });
-}
-
-void TimeAndWeather::Init()
-{
-    connect(&UniqueResource::Resource().Timer1, &QTimer::timeout, this, &TimeAndWeather::UpdateTime);
-    connect(&UniqueResource::Resource().Timer600, &QTimer::timeout, this, &TimeAndWeather::UpdateWeather);
-    connect(&UniqueResource::Resource().Timer3600, &QTimer::timeout, this, &TimeAndWeather::UpdateForecast);
-}
-
-void TimeAndWeather::UpdateTime()
-{
-    ui->lb_Time->setText(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss"));
-}
-
-void TimeAndWeather::UpdateWeatherInfo(QNetworkReply *reply)
-{
+    request.setTransferTimeout();
+    QNetworkReply *reply = co_await UniqueResource::Resource().NetworkManager.get(request);
     if (reply->error() == QNetworkReply::NetworkError::NoError)
     {
         QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
@@ -115,8 +83,20 @@ void TimeAndWeather::UpdateWeatherInfo(QNetworkReply *reply)
     reply->deleteLater();
 }
 
-void TimeAndWeather::UpdateForecastInfo(QNetworkReply *reply)
+NetworkReplyCoro TimeAndWeather::UpdateForecast()
 {
+    QUrlQuery query;
+    query.addQueryItem("lat", GlobalConfig::Config().Value("TimeAndWeather/Latitude").toString());
+    query.addQueryItem("lon", GlobalConfig::Config().Value("TimeAndWeather/Longituden").toString());
+    query.addQueryItem("lang", GlobalConfig::Config().Value("TimeAndWeather/Lang").toString());
+    query.addQueryItem("cnt", "5");
+    query.addQueryItem("appid", GlobalConfig::Config().Value("TimeAndWeather/WeatherAPIKey").toString());
+    QUrl url(GlobalConfig::Config().Value("TimeAndWeather/ForecastAPI").toString());
+    url.setQuery(query);
+    QNetworkRequest request;
+    request.setUrl(url);
+    request.setTransferTimeout();
+    QNetworkReply *reply = co_await UniqueResource::Resource().NetworkManager.get(request);
     if (reply->error() == QNetworkReply::NetworkError::NoError)
     {
         QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
@@ -151,4 +131,16 @@ void TimeAndWeather::UpdateForecastInfo(QNetworkReply *reply)
         qDebug() << reply->errorString();
     }
     reply->deleteLater();
+}
+
+void TimeAndWeather::Init()
+{
+    connect(&UniqueResource::Resource().Timer1, &QTimer::timeout, this, &TimeAndWeather::UpdateTime);
+    connect(&UniqueResource::Resource().Timer600, &QTimer::timeout, this, &TimeAndWeather::UpdateWeather);
+    connect(&UniqueResource::Resource().Timer3600, &QTimer::timeout, this, &TimeAndWeather::UpdateForecast);
+}
+
+void TimeAndWeather::UpdateTime()
+{
+    ui->lb_Time->setText(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss"));
 }
